@@ -28,12 +28,12 @@ const Profile = ({ isLoggedIn }: Props) => {
       </View>
 
       {isLoggedIn ? (
-        <Button icon={'sign-out'} style={{ backgroundColor: '#fff' }}>
+        <Button icon={'logout'} style={{ backgroundColor: '#fff' }}>
           Logout
         </Button>
       ) : (
         <Button
-          icon={'sign-in'}
+          icon={'login'}
           style={{ backgroundColor: '#fff' }}
           onPress={() => router.push('/login')}
         >

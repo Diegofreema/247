@@ -1,16 +1,91 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { useRef, useState } from 'react';
+import { categories } from '../../constants';
 
-type Props = {};
+import {
+  FlatList,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
+import Header from '../../components/Header';
+import { Text } from 'react-native-paper';
+import * as Haptics from 'expo-haptics';
 
-const categories = (props: Props) => {
+export default function Categories() {
+  const [allCat, setAllCat] = useState<string[]>(categories);
+  const [active, setActive] = useState(0);
+  const itemRef = useRef<Array<TouchableOpacity | null>>([]);
+
+  const scrollRef = useRef<ScrollView>(null);
+  const handleClick = (index: number) => {
+    const selectedItem = itemRef.current[index];
+    setActive(index);
+
+    if (selectedItem) {
+      selectedItem.measureLayout(
+        scrollRef.current! as any,
+        (x, y) => {
+          scrollRef.current?.scrollTo({
+            x: x - 16,
+            y: 0,
+            animated: true,
+          });
+        },
+        () => {}
+      );
+    }
+
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
   return (
     <View>
-      <Text>categories</Text>
+      <Header />
+      <ScrollView
+        ref={scrollRef}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{
+          gap: 20,
+          paddingHorizontal: 16,
+        }}
+      >
+        {allCat.map((cat, index) => (
+          <TouchableOpacity
+            onPress={() => handleClick(index)}
+            key={index}
+            ref={(el) => (itemRef.current[index] = el)}
+            style={active === index ? styles.active : styles.normal}
+          >
+            <Text style={active === index ? styles.activeText : styles.text}>
+              {cat}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
     </View>
   );
-};
+}
 
-export default categories;
+const styles = StyleSheet.create({
+  active: {
+    color: '#000',
 
-const styles = StyleSheet.create({});
+    borderBottomColor: '#000',
+    borderBottomWidth: 2,
+    padding: 10,
+  },
+  normal: {
+    color: '#000',
+
+    padding: 10,
+  },
+  activeText: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  text: {
+    fontWeight: '500',
+    fontSize: 18,
+  },
+});

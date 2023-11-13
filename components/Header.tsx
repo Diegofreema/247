@@ -22,7 +22,7 @@ const Header = (props: Props) => {
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
           <Searchbar
             value=""
-            icon={() => <FontAwesome name="search" size={20} />}
+            icon={() => <FontAwesome name="arrow-left" size={20} />}
           />
         </View>
       </View>
@@ -60,7 +60,7 @@ const Header = (props: Props) => {
             <Searchbar
               editable={false}
               value=""
-              icon={() => <FontAwesome name="arrow-left" size={20} />}
+              icon={() => <FontAwesome name="search" size={20} />}
             />
           </Pressable>
         )}
