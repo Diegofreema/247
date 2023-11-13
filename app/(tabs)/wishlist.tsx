@@ -1,13 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import NavigationHeader from '../../components/NavigationHeader';
+import Container from '../../components/Container';
 
 type Props = {};
 
 const wishlist = (props: Props) => {
   return (
-    <View>
+    <Container>
+      <NavigationHeader title="Wishlist" />
       <Text>wishlist</Text>
-    </View>
+    </Container>
   );
 };
 

@@ -22,12 +22,22 @@ const ProductCard = ({
   image,
   id,
 }: ProductProps) => {
+  const trimTitle = (title: string) => {
+    const [firstWord, secondWord, thirdWord, fourthWord, ...remainingWords] =
+      title.split(' ');
+    if (remainingWords.length > 0) {
+      return `${firstWord} ${secondWord} ${thirdWord} ${fourthWord}...`;
+    }
+    return title;
+  };
   return (
     <Link asChild href={`/product/${id}`}>
       <Card style={{ width: width * 0.5, height: 300 }}>
         <Card.Cover source={{ uri: image }} style={{ marginBottom: 20 }} />
         <Card.Content>
-          <Text style={{ fontSize: 15, fontWeight: '500' }}>{title}</Text>
+          <Text style={{ fontSize: 15, fontWeight: '500' }}>
+            {trimTitle(title as string)}
+          </Text>
           <Text style={{ fontSize: 18, fontWeight: '700' }}>#{price}</Text>
         </Card.Content>
       </Card>
